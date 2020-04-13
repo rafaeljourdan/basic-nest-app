@@ -4,17 +4,17 @@ import { Type } from 'class-transformer'
 export class SignupDto {
     @IsOptional()
     @IsString()
-    country?: string
+    readonly country?: string
 
     @IsOptional()
     @IsString()
-    language?: string
+    readonly language?: string
 
     @IsString()
-    fullname: string
+    readonly fullname: string
 
     @IsString()
-    email: string
+    readonly email: string
 
     @IsString()
     @MinLength(3)
@@ -23,9 +23,9 @@ export class SignupDto {
         /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
         { message: 'Password too weak: type at least 1 upper case letter and at 1 lower case letter and 1 number or special character' }
     )
-    password: string
+    readonly password: string
 
     @IsBoolean()
     @IsIn([true], { message: `You need to accept the terms and conditions.` })
-    flagTermsAccepted: boolean
+    readonly flagTermsAccepted: boolean
 }

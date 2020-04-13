@@ -5,10 +5,10 @@ import { SignupDto, LoginDto } from './dto'
 export class AuthService {  
   
   public signup(signupDto: SignupDto): object {
-    return (signupDto)
+    return signupDto
   }
   
   public login(loginDto: LoginDto): object {
-    return (loginDto)
+    return loginDto
   }
 }

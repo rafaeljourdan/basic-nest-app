@@ -5,13 +5,18 @@ import { User } from './schema'
 
 @Injectable()
 export class UserRepository {
-    constructor(@InjectModel('User') private userModel: Model<User>) {}
+    constructor(
+        @InjectModel('User') private userModel: Model<User>) {}
 
-    public async getAll(): Promise<any[]> {
-        return this.userModel.find()
+    public getAll(): User[] {
+        return this.userModel
+            .find()
+            .lean()
     }
 
-    public async getById(_id: number): Promise<any[]> {
-        return this.userModel.findOne({ _id })
+    public getById(_id: number): User {
+        return this.userModel
+            .findOne({ _id })
+            .lean()
     }
 }

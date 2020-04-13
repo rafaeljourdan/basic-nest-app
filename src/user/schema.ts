@@ -1,10 +1,10 @@
 import * as mongoose from 'mongoose'
 
-interface User extends mongoose.Document {}
+interface User extends Document {}
 
 const UserSchema = new mongoose.Schema({
     country: String,
-    language: String,
+    // language: String,
     fullname: {
         type: String,
         required: true

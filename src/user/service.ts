@@ -11,14 +11,13 @@ export class UserService {
     }
   }
   
-  public async getById(id): Promise<object> {
+  public async getById(id): Promise<any> {
     const customer = await this.userRepository.getById(id)
     this.isRegisterNotFound(customer, id)
     return customer
   }
   
-  public getAll(): Promise<any[]> {
-    const customers = this.userRepository.getAll()
-    return customers
+  public async getAll(): Promise<any[]> {
+    return await this.userRepository.getAll()
   }
 }

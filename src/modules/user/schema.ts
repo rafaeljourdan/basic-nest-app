@@ -3,8 +3,14 @@ import * as mongoose from 'mongoose'
 interface User extends Document {}
 
 const UserSchema = new mongoose.Schema({
-    country: String,
-    // language: String,
+    country: {
+        type: String,
+        default: ''
+    },
+    language: {
+        type: String,
+        default: ''
+    },
     fullname: {
         type: String,
         required: true
@@ -18,8 +24,12 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     flagTermsAccepted: {
-        type: Boolean,        
+        type: Boolean,
         required: true
+    },
+    roles: {
+        type: Array,
+        default: ['customer']
     }
 })
 

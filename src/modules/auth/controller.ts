@@ -7,13 +7,11 @@ export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
   @Post('signup')
-  @UsePipes(ValidationPipe)
   public async signup(@Body() signupDto: SignupDto): Promise<object> {
     return this.authService.signup(signupDto)
   }
 
   @Post('login')
-  @UsePipes(ValidationPipe)
   public async login(@Body() loginDto: LoginDto): Promise<object> {
     return this.authService.login(loginDto)
   }

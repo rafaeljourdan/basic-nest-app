@@ -1,27 +1,33 @@
-import { NestFactory } from '@nestjs/core'
+import { NestFactory, Reflector } from '@nestjs/core'
 import { ValidationPipe, ValidationError } from '@nestjs/common'
 import { AppModule } from './app.module'
 import { GlobalExceptionFilter, HttpExceptionFilter, ValidationFilter } from './shared/filters/'
 import { ValidationException } from './shared/exception/validation.exception'
+import { AuthorizationGuard } from './shared/guards/authorization.guard'
 
 // import * as mongoose from 'mongoose'
 // mongoose.set('useFindAndModify', false)
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+let instance = null
+const getNestInstance = async () => (!instance)
+  ? await NestFactory.create(AppModule) 
+  : instance
 
-  app.setGlobalPrefix('api') // apply global prefix
-  app.enableCors();
+async function bootstrap() {
+  const app = await getNestInstance()
+
+  app.setGlobalPrefix(process.env.API_PREFIX)
+  app.enableCors()
   
-  // apply global filters in order (macro -> micro)
+  // Global filters (in order: macro -> micro)
   app.useGlobalFilters(
     new GlobalExceptionFilter(),
     new HttpExceptionFilter(),
     new ValidationFilter()
   )
 
-  // set ValidationPipe as a GlobalPipe
-  app.useGlobalPipes(new ValidationPipe({
+  // Global Pipes
+  app.useGlobalPipes(new ValidationPipe({ // set ValidationPipe as a GlobalPipe
     skipMissingProperties: false, // do not ignore any dto property
     exceptionFactory: (errors: ValidationError[]) => {
       const validationErrors = errors.map(error =>
@@ -32,6 +38,12 @@ async function bootstrap() {
     }
   }))
 
-  await app.listen(5000)
+  // Global Guards
+  app.useGlobalGuards(new AuthorizationGuard(new Reflector()))
+
+  // Up the API
+  await app.listen(process.env.API_PORT)
+
+  console.log(`Application is running on: ${ await app.getUrl() }`)
 }
 bootstrap()

@@ -1,6 +1,8 @@
 import * as mongoose from 'mongoose'
 
-interface User extends Document {}
+interface User extends mongoose.Document {
+    readonly country: string;
+}
 
 const UserSchema = new mongoose.Schema({
     country: {

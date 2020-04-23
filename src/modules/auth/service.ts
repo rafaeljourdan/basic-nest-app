@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import * as md5 from 'md5'
 import { jwtLogin } from './../../shared/jwt'
-import { JWT } from './../../shared/constants'
 import { SignupDto, LoginDto } from './dto'
 import { UserService } from '../user/service'
 
@@ -24,7 +23,7 @@ export class AuthService {
   }
 
   private encryptMd5(password: string): string {
-    return md5(password, JWT['saltKey'])
+    return md5(password, process.env.MD5_SALTKEY)
   }
 
 }

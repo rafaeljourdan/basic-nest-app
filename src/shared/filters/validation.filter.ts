@@ -11,11 +11,13 @@ export class ValidationFilter implements ExceptionFilter {
         const response = ctx.getResponse()
         const status = 400
 
-        return response.status(status).json({
-            status,
-            createdBy: 'ValidationFilter',
-            errorMessage: exception.validationErrors
-        })
+        return response
+            .status(status)
+            .json({
+                status,
+                createdBy: 'ValidationFilter',
+                errorMessage: exception.validationErrors
+            })
 
     }
 

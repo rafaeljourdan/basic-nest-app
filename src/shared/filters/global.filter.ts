@@ -10,13 +10,15 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         const response = ctx.getResponse()
         const status = 500
         
-        return response.status(status).json({
-            status,
-            createdBy: 'GlobalExceptionFilter',
-            errorMessage: (exception.message) 
-                ? exception.message
-                : 'Unexpected error ocurred'
-        })
+        return response
+            .status(status)
+            .json({
+                status,
+                createdBy: 'GlobalExceptionFilter',
+                errorMessage: (exception.message) 
+                    ? exception.message
+                    : 'Unexpected error ocurred'
+            })
     }
 
 }

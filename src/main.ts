@@ -1,8 +1,8 @@
 import { NestFactory, Reflector } from '@nestjs/core'
-import { ValidationPipe, ValidationError } from '@nestjs/common'
+import { ValidationPipe } from '@nestjs/common'
+import { ValidationPipeOptions } from './shared/pipe/validationPipe.options'
 import { AppModule } from './app.module'
 import { GlobalExceptionFilter, HttpExceptionFilter, ValidationFilter } from './shared/filters/'
-import { ValidationException } from './shared/exception/validation.exception'
 import { RolesGuard } from './shared/guards/roles.guard'
 
 // import * as mongoose from 'mongoose'
@@ -27,16 +27,7 @@ async function bootstrap() {
   )
 
   // Global Pipes
-  app.useGlobalPipes(new ValidationPipe({ // set ValidationPipe as a GlobalPipe
-    skipMissingProperties: false, // do not ignore any dto property
-    exceptionFactory: (errors: ValidationError[]) => {
-      const validationErrors = errors.map(error =>
-        `${error.property} has wrong value ${error.value}: ${Object.values(error.constraints).join(', ')} `
-      )
-      // Errors are send to constructor that gonna throw ValidationException when validation errors happens
-      return new ValidationException(validationErrors)
-    }
-  }))
+  app.useGlobalPipes(new ValidationPipe(ValidationPipeOptions.options)) // set ValidationPipe as a global pipe
 
   // Global Guards
   const reflector = app.get(Reflector)

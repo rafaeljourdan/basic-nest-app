@@ -21,7 +21,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer
       .apply(AuthMiddleware)
-      .exclude('api/v1/users/test/admin')
+      .exclude({ path:`${process.env.API_PREFIX}/users/example/open_route`, method: RequestMethod.GET }) // public routes
       .forRoutes(UserController)
   }
 }

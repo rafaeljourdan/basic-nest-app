@@ -3,14 +3,14 @@ import { ValidationPipe, ValidationError } from '@nestjs/common'
 import { AppModule } from './app.module'
 import { GlobalExceptionFilter, HttpExceptionFilter, ValidationFilter } from './shared/filters/'
 import { ValidationException } from './shared/exception/validation.exception'
-import { AuthorizationGuard } from './shared/guards/authorization.guard'
+import { RolesGuard } from './shared/guards/roles.guard'
 
 // import * as mongoose from 'mongoose'
 // mongoose.set('useFindAndModify', false)
 
 let instance = null
 const getNestInstance = async () => (!instance)
-  ? await NestFactory.create(AppModule) 
+  ? await NestFactory.create(AppModule)
   : instance
 
 async function bootstrap() {
@@ -39,9 +39,10 @@ async function bootstrap() {
   }))
 
   // Global Guards
-  app.useGlobalGuards(new AuthorizationGuard(new Reflector()))
+  const reflector = app.get(Reflector)
+  app.useGlobalGuards(new RolesGuard(reflector))
 
-  // Up the API
+  // Start API
   await app.listen(process.env.API_PORT)
 
   console.log(`Application is running on: ${ await app.getUrl() }`)

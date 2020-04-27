@@ -1,7 +1,8 @@
 import { Controller, Get, Param, ParseIntPipe, UseGuards } from '@nestjs/common'
 import { UserService } from './service'
-import { AuthorizationGuard } from 'src/shared/guards/authorization.guard'
 import { Roles } from 'src/shared/decorators/roles.decorator'
+import { Public } from 'src/shared/decorators/public.decorator'
+
 
 @Controller('users')
 export class UserController {
@@ -22,9 +23,10 @@ export class UserController {
   }
 
   // Only for test
+  // @Public()
   @Get('test/admin')
-  @Roles('admin')
   public getAdmins(): any {
     return ['admin 1', 'admin 2']
   }
+
 }

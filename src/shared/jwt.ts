@@ -22,10 +22,10 @@ const jwtAuthenticate = (req: Request, next: Function): void => {
 	}
 }
 
-const jwtAuthorize = (req: Request, allowedRoles: string[] = []): boolean => {
-	return (!allowedRoles)
+const jwtAuthorize = (userRoles: string[] = [], allowedRoles: string[] = []): boolean => {
+	return (allowedRoles.length < 1)
 		? true
-		: !!(req['user']['roles']
+		: !!(userRoles
 			.find(userRole => allowedRoles.includes(userRole)))
 	
 }

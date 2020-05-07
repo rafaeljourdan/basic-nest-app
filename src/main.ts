@@ -1,12 +1,12 @@
 import { NestFactory, Reflector } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
+import * as mongoose from 'mongoose'
 import { ValidationPipeOptions } from './shared/pipe/validationPipe.options'
 import { AppModule } from './app.module'
 import { GlobalExceptionFilter, HttpExceptionFilter, ValidationFilter } from './shared/filters/'
 import { RolesGuard } from './shared/guards/roles.guard'
 
-// import * as mongoose from 'mongoose'
-// mongoose.set('useFindAndModify', false)
+mongoose.set('useFindAndModify', false)
 
 let instance = null
 const getNestInstance = async () => (!instance)

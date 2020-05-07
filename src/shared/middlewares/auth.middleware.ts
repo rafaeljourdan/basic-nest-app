@@ -1,4 +1,4 @@
-import { NestMiddleware } from "@nestjs/common";
+import { NestMiddleware } from '@nestjs/common'
 import { jwtAuthenticate } from './../jwt'
 
 export class AuthMiddleware implements NestMiddleware {

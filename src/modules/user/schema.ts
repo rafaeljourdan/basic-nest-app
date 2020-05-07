@@ -1,10 +1,10 @@
-import * as mongoose from 'mongoose'
+import { Document, Schema } from 'mongoose'
 
-interface User extends mongoose.Document {
-    readonly country: string;
+interface IUser extends Document {
+    readonly country: string
 }
 
-const UserSchema = new mongoose.Schema({
+const schema = {
     country: {
         type: String,
         default: ''
@@ -33,6 +33,8 @@ const UserSchema = new mongoose.Schema({
         type: Array,
         default: ['customer']
     }
-})
+}
 
-export { UserSchema, User }
+const UserSchema = new Schema(schema, { timestamps: true })
+
+export { UserSchema, IUser }

@@ -1,4 +1,4 @@
-import { BadRequestException, UnauthorizedException } from '@nestjs/common'
+import { UnauthorizedException } from '@nestjs/common'
 import * as jwt from 'jsonwebtoken'
 
 const getToken = (req: Request): string => 
@@ -10,7 +10,7 @@ const jwtLogin = (user: object): string =>
 const jwtAuthenticate = (req: Request, next: Function): void => {
 	try {
 		const token: string = getToken(req)
-		if (!token) { throw new BadRequestException('Token required') }
+		if (!token) { throw new UnauthorizedException('Token required') }
 
 		const tokenData = jwt.verify(token, process.env.JWT_SALTKEY)
 		if (!tokenData) { throw new UnauthorizedException('Token invalid') }
@@ -25,9 +25,7 @@ const jwtAuthenticate = (req: Request, next: Function): void => {
 const jwtAuthorize = (userRoles: string[] = [], allowedRoles: string[] = []): boolean => {
 	return (allowedRoles.length < 1)
 		? true
-		: !!(userRoles
-			.find(userRole => allowedRoles.includes(userRole)))
-	
+		: !!(userRoles.find(userRole => allowedRoles.includes(userRole)))
 }
 
 export { jwtLogin, jwtAuthenticate, jwtAuthorize }

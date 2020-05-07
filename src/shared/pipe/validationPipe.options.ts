@@ -1,14 +1,15 @@
-import { ValidationError } from "class-validator"
-import { ValidationException } from "../exception/validation.exception"
+import { ValidationError } from 'class-validator'
+import { ValidationException } from './../exception/validation.exception'
 
 export class ValidationPipeOptions {
-    private static validationOptions: any = {
-        skipMissingProperties: false, // do not ignore any dto property
+    private static validationOptions: object = {
+        skipMissingProperties: false, // to not ignore any dto property
         exceptionFactory: (errors: ValidationError[]) => {
             const validationErrors = errors.map(error =>
                 `${error.property} has wrong value ${error.value}: ${Object.values(error.constraints).join(', ')} `
             )
-            // Errors are send to constructor that gonna throw ValidationException when ocorrers validation errors
+            // The errors are send to ValidationException constructor that's going to throw ValidationException
+            // The exception is going to catch by validation.filter (configured globally)
             return new ValidationException(validationErrors)
         }
     }

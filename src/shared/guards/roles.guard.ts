@@ -18,7 +18,7 @@ export class RolesGuard implements CanActivate {
     }
 
     private isPublicRoute (context: ExecutionContext): boolean | void {
-        return !!this.reflector.get<boolean>("isPublicRoute", context.getHandler())
+        return !!this.reflector.get<boolean>('isPublicRoute', context.getHandler())
     }
 
     private checkUserRoles (req: any, context: ExecutionContext): boolean {

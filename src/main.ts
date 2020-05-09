@@ -7,7 +7,7 @@ import { ValidationPipeOptions } from './shared/pipe/validationPipe.options'
 import { AppModule } from './app.module'
 import { GlobalExceptionFilter, HttpExceptionFilter, ValidationFilter } from './shared/filters/'
 import { RolesGuard } from './shared/guards/roles.guard'
-import { ConfigService } from './shared/config/config.service'
+// import { ConfigService } from './shared/config/config.service'
 
 let instance = null
 const getNestInstance = async () => (!instance)
@@ -17,8 +17,8 @@ const getNestInstance = async () => (!instance)
 async function bootstrap() {
   const app = await getNestInstance()
 
-  const configService = new ConfigService()
-  console.log('get API_PREFIX', configService.get('API_PREFIX'))
+  /* const configService = new ConfigService()
+  console.log('get API_PREFIX', configService.get('API_PREFIX')) */
 
   app.setGlobalPrefix(process.env.API_PREFIX)
   app.enableCors()

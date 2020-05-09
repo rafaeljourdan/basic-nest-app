@@ -1,12 +1,13 @@
 import { NestFactory, Reflector } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
-import * as mongoose from 'mongoose'
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 import { ValidationPipeOptions } from './shared/pipe/validationPipe.options'
 import { AppModule } from './app.module'
 import { GlobalExceptionFilter, HttpExceptionFilter, ValidationFilter } from './shared/filters/'
 import { RolesGuard } from './shared/guards/roles.guard'
-
-mongoose.set('useFindAndModify', false)
+import { ConfigService } from './shared/config/config.service'
 
 let instance = null
 const getNestInstance = async () => (!instance)
@@ -15,6 +16,9 @@ const getNestInstance = async () => (!instance)
 
 async function bootstrap() {
   const app = await getNestInstance()
+
+  const configService = new ConfigService()
+  console.log('get API_PREFIX', configService.get('API_PREFIX'))
 
   app.setGlobalPrefix(process.env.API_PREFIX)
   app.enableCors()
@@ -38,4 +42,5 @@ async function bootstrap() {
 
   console.log(`Application is running on: ${ await app.getUrl() }`)
 }
+
 bootstrap()

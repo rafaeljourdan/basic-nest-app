@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { UserRepository } from './repository'
+
+import { UserRepository } from './user.repository'
 import { CreateUserDto, UpdateUserDto } from './dto'
 import { Md5 } from 'src/shared/md5'
 

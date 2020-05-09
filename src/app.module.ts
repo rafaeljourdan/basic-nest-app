@@ -1,15 +1,16 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
-import { MongooseModule } from '@nestjs/mongoose'
-import { AuthModule } from './modules/auth/module'
-import { UserModule } from './modules/user/module'
-import { UserController } from './modules/user/controller'
+
+import { AuthModule } from './modules/auth/auth.module'
+import { UserModule } from './modules/user/user.module'
+import { UserController } from './modules/user/user.controller'
 import { AuthMiddleware } from './shared/middlewares/auth.middleware'
+import { ConfigModule } from './shared/config/config.module'
+import { DatabaseModule } from './shared/database/database.module'
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), // package internally uses dotenv
-    MongooseModule.forRoot(process.env.MONGODB_URI,{ useNewUrlParser: true, useUnifiedTopology: true }),
+    ConfigModule,
+    DatabaseModule,
     AuthModule,
     UserModule
   ],

@@ -1,6 +1,7 @@
 import { Response } from 'express'
 import { Controller, Get, Param, Post, Body, Put, Delete, Res, HttpStatus } from '@nestjs/common'
-import { UserService } from './service'
+
+import { UserService } from './user.service'
 import { Roles } from 'src/shared/decorators/roles.decorator'
 import { Public } from 'src/shared/decorators/public.decorator'
 import { CreateUserDto, UpdateUserDto } from './dto'

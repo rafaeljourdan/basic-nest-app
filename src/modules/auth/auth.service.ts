@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { jwtLogin } from './../../shared/jwt'
 import { SignupDto, LoginDto } from './dto'
-import { UserService } from '../user/service'
+import { UserService } from '../user/user.service'
 import { Md5 } from 'src/shared/md5'
 
 @Injectable()

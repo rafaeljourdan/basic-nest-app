@@ -1,12 +1,11 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Inject } from '@nestjs/common'
 import { Model } from 'mongoose'
-import { InjectModel } from '@nestjs/mongoose'
-import { IUser } from './schema'
+
+import { IUser } from './user.schema'
 
 @Injectable()
 export class UserRepository {
-    constructor(
-        @InjectModel('User') private model: Model<IUser>) {}
+    constructor(@Inject('USER_MODEL') private model: Model<IUser>) {}
 
     public signup(payload: object): IUser {
         return this.create(payload)

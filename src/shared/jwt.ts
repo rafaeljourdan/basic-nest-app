@@ -1,19 +1,23 @@
 import { UnauthorizedException } from '@nestjs/common'
+
 import * as jwt from 'jsonwebtoken'
+import config from './contants'
 
 const getToken = (req: Request): string => 
 	req.headers['authorization']
 	
 const jwtLogin = (user: object): string => 
-    jwt.sign(user, process.env.JWT_SALTKEY, { expiresIn: process.env.JWT_EXPIRESIN })
+    jwt.sign(user, config['JWT_SALTKEY'], { expiresIn: config['JWT_EXPIRESIN'] })
 
 const jwtAuthenticate = (req: Request, next: Function): void => {
 	try {
 		const token: string = getToken(req)
 		if (!token) { throw new UnauthorizedException('Token required') }
 
-		const tokenData = jwt.verify(token, process.env.JWT_SALTKEY)
+		const tokenData: number = jwt.verify(token, config['JWT_SALTKEY'])
 		if (!tokenData) { throw new UnauthorizedException('Token invalid') }
+
+		console.log('tokenData', tokenData)
 
 		req['user'] = tokenData
 		next()

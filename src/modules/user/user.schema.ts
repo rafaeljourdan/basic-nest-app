@@ -1,8 +1,6 @@
-import { Document, Schema } from 'mongoose'
+import { Schema } from 'mongoose'
 
-interface IUser extends Document {
-    readonly country: string
-}
+import { Md5 } from './../../shared/util'
 
 const schema = {
     country: {
@@ -37,4 +35,11 @@ const schema = {
 
 const UserSchema = new Schema(schema, { timestamps: true })
 
-export { UserSchema, IUser }
+UserSchema.pre('save', function(next: Function): void {
+    if (this.isNew) {
+        this.password = Md5.encrypt(this.password)
+    }
+    next()
+})
+
+export { UserSchema }

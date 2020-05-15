@@ -1,5 +1,4 @@
-import { IsString, MinLength, MaxLength, Matches, IsEmail } from 'class-validator'
-import { Transform } from 'class-transformer'
+import { IsString, IsEmail } from 'class-validator'
 
 export class LoginDto {
     @IsEmail()

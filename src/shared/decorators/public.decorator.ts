@@ -1,3 +1,3 @@
-import { SetMetadata } from '@nestjs/common'
+import { SetMetadata, CustomDecorator } from '@nestjs/common'
 
-export const Public = () => SetMetadata( 'isPublicRoute', true )
+export const Public = (): CustomDecorator => SetMetadata('isPublicRoute', true)

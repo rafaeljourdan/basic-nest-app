@@ -2,8 +2,8 @@ import { ArgumentsHost, ExceptionFilter, HttpException, Catch } from '@nestjs/co
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
-    
-    catch(exception: HttpException, host: ArgumentsHost) {
+
+    catch(exception: HttpException, host: ArgumentsHost): Response {
         console.log('http exception handler was triggered', exception)
 
         const ctx = host.switchToHttp()

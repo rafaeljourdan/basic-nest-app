@@ -1,31 +1,28 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
-import { UserRepository } from './user.repository'
 import { CreateUserDto, UpdateUserDto } from './dto'
-import { Md5 } from 'src/shared/md5'
+import UserRepository from './user.repository'
+import { Util } from 'src/shared/util'
+import { IUser } from './user.interface'
 
 @Injectable()
-export class UserService {
+class UserService {
   constructor(private userRepository: UserRepository) {}
-
-  private isRegisterNotFound = (register: any): void => {
-    if (!register) {
-      throw new NotFoundException(`Register not found`)
-    }
-  }
 
   public signup(payload: object): any {
     return this.userRepository.signup(payload)
   }
 
-  public async login({ email, password }): Promise<any> {
-    const user = this.userRepository.login(email, password)
-    return user || this.isRegisterNotFound(user)
+  public async login({ email, password }): Promise<IUser> {
+    const user = await this.userRepository.login(email, password)
+		Util.isRegisterNotFound(user)
+		return user
   }
 
-  public async getById(id: string): Promise<any> {
+  public async getById(id: string): Promise<IUser> {
     const user = await this.userRepository.getById(id)
-    return user || this.isRegisterNotFound(user)
+		Util.isRegisterNotFound(user)
+		return user
   }
 
   public async getAll(): Promise<any[]> {
@@ -33,7 +30,6 @@ export class UserService {
   }
 
   public async create(createUserDto: CreateUserDto): Promise<any> {
-    createUserDto.password = Md5.encrypt(createUserDto.password)
     return await this.userRepository.create(createUserDto)
   }
 
@@ -46,3 +42,5 @@ export class UserService {
     return await this.userRepository.remove(id)
   }
 }
+
+export default UserService

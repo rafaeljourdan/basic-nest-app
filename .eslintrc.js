@@ -5,9 +5,10 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
-  extends: [
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
+	extends: [
+		'plugin:@typescript-eslint/eslint-recommended',
+		'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier',
     'prettier/@typescript-eslint',
   ],
@@ -17,8 +18,10 @@ module.exports = {
     jest: true,
   },
   rules: {
+		"semi": ["error", 'never'],
+    "quotes": ["error", 'single'],
     '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'on',
+    '@typescript-eslint/explicit-function-return-type': 1,
     '@typescript-eslint/no-explicit-any': 'off',
   },
 }

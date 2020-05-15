@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, Next } from '@nestjs/common'
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { jwtAuthorize } from './../jwt'
 
@@ -10,7 +10,7 @@ import { jwtAuthorize } from './../jwt'
 @Injectable()
 export class RolesGuard implements CanActivate {
     constructor(private reflector: Reflector) {}
-    
+
     canActivate(context: ExecutionContext): boolean  {
         const host = context.switchToHttp()
         const req = host.getRequest()

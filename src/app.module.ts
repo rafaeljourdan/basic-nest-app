@@ -2,10 +2,11 @@ import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/c
 
 import { AuthModule } from './modules/auth/auth.module'
 import { UserModule } from './modules/user/user.module'
-import { UserController } from './modules/user/user.controller'
+import UserController from './modules/user/user.controller'
 import { AuthMiddleware } from './shared/middlewares/auth.middleware'
 import { ConfigModule } from './shared/config/config.module'
 import { DatabaseModule } from './shared/database/database.module'
+import config from './shared/contants'
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ export class AppModule implements NestModule {
       .apply(AuthMiddleware)
       .exclude(
         {
-          path:`${process.env.API_PREFIX}/users/example/open_route`, // public route
+          path:`${config['API_PREFIX']}/users/example/open_route`, // public route
           method: RequestMethod.GET
         }
       )

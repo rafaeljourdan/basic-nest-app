@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common'
 
 import { CreateUserDto, UpdateUserDto } from './dto'
 import UserRepository from './user.repository'
-import { Util } from 'src/shared/util'
+import { UtilService } from 'src/shared/util/util.service'
 import { IUser } from './user.interface'
 
 @Injectable()
 class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+		private userRepository: UserRepository
+	) {}
 
   public signup(payload: object): any {
     return this.userRepository.signup(payload)
@@ -15,13 +17,13 @@ class UserService {
 
   public async login({ email, password }): Promise<IUser> {
     const user = await this.userRepository.login(email, password)
-		Util.isRegisterNotFound(user)
+		UtilService.isRegisterNotFound(user)
 		return user
   }
 
   public async getById(id: string): Promise<IUser> {
     const user = await this.userRepository.getById(id)
-		Util.isRegisterNotFound(user)
+		UtilService.isRegisterNotFound(user)
 		return user
   }
 

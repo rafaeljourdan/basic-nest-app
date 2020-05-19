@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose'
 
-import { Md5 } from './../../shared/util'
+import { UtilService } from './../../shared/util/util.service'
 
 const schema = {
     country: {
@@ -37,7 +37,7 @@ const UserSchema = new Schema(schema, { timestamps: true })
 
 UserSchema.pre('save', function(next: Function): void {
     if (this.isNew) {
-        this.password = Md5.encrypt(this.password)
+        this.password = UtilService.encrypt(this.password)
     }
     next()
 })
